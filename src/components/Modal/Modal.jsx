@@ -1,9 +1,6 @@
-import { Component } from 'react';
-import { createPortal } from 'react-dom';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import './Modal.css';
-
-const modalRoot = document.querySelector('#modal-root');
+import PropTypes from 'prop-types';
 
 export class Modal extends Component {
   componentDidMount() {
@@ -20,25 +17,24 @@ export class Modal extends Component {
     }
   };
 
-  handleBackDropClick = e => {
-    if (e.currentTarget === e.target) {
+  handleOverlayClick = e => {
+    if (e.target === e.currentTarget) {
       this.props.onClose();
     }
   };
 
   render() {
-    return createPortal(
-      <div className="Overlay" onClick={this.handleBackDropClick}>
+    return (
+      <div className="Overlay" onClick={this.handleOverlayClick}>
         <div className="Modal">
           <img src={this.props.largeImageURL} alt="" />
         </div>
-      </div>,
-      modalRoot
+      </div>
     );
   }
 }
 
 Modal.propTypes = {
-  onClose: PropTypes.func,
-  largeImageUrl: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
 };
